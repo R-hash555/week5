@@ -8,6 +8,39 @@ function Signup() {
     // console.log(e.target.value);
       setN(e.target.value);
   }
+    function emailHandler(e) {
+    // console.log(e.target.value);
+      setE(e.target.value);
+  }
+     function passwordHandler(e) {
+    // console.log(e.target.value);
+      setP(e.target.value);
+  }
+
+  async function submitHandler(){
+  let sd={
+    name:n,
+    email:E,
+    password:P
+  }
+  console.log(" data : "+JSON.stringify(sd));
+  try{
+    let res=await fetch("http://localhost:4040/signup",{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body: JSON.stringify(sd)
+    })
+    let data=await res.text();
+    if(res.ok){
+      alert(" signup sucesss ✅");
+    }
+  }
+  catch(error){
+    alert(" signup failed ❌ : "+error);
+  }
+ }
   return (
     <>
       <h3>create account</h3>
@@ -17,20 +50,15 @@ function Signup() {
       <input
         type="text"
         placeholder="email"
-        onChange={(e) => {
-        //   console.log(e.target);
-        setE(e.target.value);
-        }}
+        onChange={emailHandler}
       />
       <br />
       <input type="text" placeholder="password" 
-      onChange={e=>{
-        setP(E.target.value);
-      }}
+      onChange={passwordHandler}
       />
       <br />
       <br />
-      <button>submit</button>
+      <button onClick={submitHandler}>submit</button>
       <br />
       <div>
         <h4>name : {n}</h4>
